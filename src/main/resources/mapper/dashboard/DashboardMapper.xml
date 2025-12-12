@@ -6,22 +6,28 @@
 <mapper namespace="com.final_team4.finalbe.dashboard.mapper.DashboardMapper">
 
     <select id="findContentsByUserId"
-            parameterType="long"
+            parameterType="map"
             resultType="com.final_team4.finalbe.dashboard.dto.DashboardContentSummary">
         SELECT
-        c.ID         AS contentId,
+        c.ID          AS contentId,
         c.TITLE,
         c.KEYWORD,
         c.LINK,
         COALESCE(COUNT(ck.ID), 0) AS clickCount,
-        c.CREATED_AT AS createdAt,
-        c.UPDATED_AT AS updatedAt
+        c.CREATED_AT  AS createdAt,
+        c.UPDATED_AT  AS updatedAt,
+        p.CATEGORY_ID AS categoryId,
+        pcg.NAME      AS categoryName
         FROM CONTENT c
         LEFT JOIN PRODUCT_CONTENT pc ON pc.CONTENT_ID = c.ID
-        LEFT JOIN CLICKS ck         ON ck.PRODUCT_ID = pc.PRODUCT_ID
+        LEFT JOIN PRODUCT p ON p.ID = pc.PRODUCT_ID
+        LEFT JOIN PRODUCT_CATEGORY pcg ON pcg.ID = p.CATEGORY_ID
+        LEFT JOIN CLICKS ck ON ck.PRODUCT_ID = pc.PRODUCT_ID
         WHERE c.USER_ID = #{userId}
-        GROUP BY c.ID, c.TITLE, c.KEYWORD, c.CREATED_AT, c.UPDATED_AT, c.LINK
+        GROUP BY c.ID, c.TITLE, c.KEYWORD, c.CREATED_AT, c.UPDATED_AT, c.LINK, p.CATEGORY_ID, pcg.NAME
         ORDER BY c.UPDATED_AT DESC, c.CREATED_AT DESC
+        OFFSET #{offset} ROWS
+        FETCH NEXT #{size} ROWS ONLY
     </select>
 
     <select id="countAllContentsByUserId"

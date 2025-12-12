@@ -20,4 +20,6 @@ public class DashboardContentSummary {
     private long clickCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long categoryId;
+    private String categoryName;
 }

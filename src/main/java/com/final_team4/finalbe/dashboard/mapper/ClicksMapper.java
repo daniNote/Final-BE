@@ -12,8 +12,6 @@ import java.util.List;
 @Mapper
 public interface ClicksMapper {
 
-    long countClicksByProductId(@Param("productId") Long productId);
-
     long countAllClicksByUserId(@Param("userId") Long userId);
 
     List<DailyClicksDto> findDailyClicks(@Param("userId") Long userId,

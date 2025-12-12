@@ -2,12 +2,13 @@ package com.final_team4.finalbe.dashboard.controller;
 
 import com.final_team4.finalbe._core.security.JwtPrincipal;
 import com.final_team4.finalbe.dashboard.dto.DashboardContentsCountResponseDto;
-import com.final_team4.finalbe.dashboard.dto.DashboardContentsResponseDto;
+import com.final_team4.finalbe.dashboard.dto.DashboardContentPageResponseDto;
 import com.final_team4.finalbe.dashboard.dto.DashboardDailyClicksResponseDto;
 import com.final_team4.finalbe.dashboard.dto.DashboardStatusGetResponseDto;
 import com.final_team4.finalbe.dashboard.service.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,8 @@ public class DashboardController {
     @ApiResponse(responseCode = "200", description = "조회 성공")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/status")
-    public DashboardStatusGetResponseDto getStatus(@AuthenticationPrincipal JwtPrincipal jwtPrincipal) {
+    public DashboardStatusGetResponseDto getStatus
+            (@AuthenticationPrincipal JwtPrincipal jwtPrincipal) {
 
         return dashboardService.getStatus(jwtPrincipal.userId());
 
@@ -44,9 +46,12 @@ public class DashboardController {
     @ApiResponse(responseCode = "200", description = "조회 성공")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/contents")
-    public DashboardContentsResponseDto getContents(@AuthenticationPrincipal JwtPrincipal principal) {
+    public DashboardContentPageResponseDto getContents(
+            @AuthenticationPrincipal JwtPrincipal principal,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "10")int size) {
 
-        return dashboardService.getContents(principal.userId());
+        return dashboardService.getContents(principal.userId(),page,size);
     }
 
 

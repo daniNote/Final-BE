@@ -14,6 +14,7 @@ import com.final_team4.finalbe.logger.aop.Loggable;
 import com.final_team4.finalbe.logger.mapper.LoggerMapper;
 import com.final_team4.finalbe.notification.mapper.NotificationMapper;
 import com.final_team4.finalbe.product.mapper.ProductCategoryMapper;
+import com.final_team4.finalbe.product.mapper.ProductContentMapper;
 import com.final_team4.finalbe.product.mapper.ProductMapper;
 import com.final_team4.finalbe.schedule.mapper.ScheduleMapper;
 import com.final_team4.finalbe.schedule.mapper.ScheduleSettingMapper;
@@ -116,6 +117,9 @@ public class DashboardControllerTest {
     @MockitoBean
     ProductMapper productMapper;
 
+    @MockitoBean
+    ProductContentMapper productContentMapper;
+
     @AfterEach
     void clearSecurityContext() {
         SecurityContextHolder.clearContext();
@@ -165,20 +169,29 @@ public class DashboardControllerTest {
                 .clickCount(5L)
                 .build();
 
-        DashboardContentsResponseDto response = DashboardContentsResponseDto.builder()
-                .contents(List.of(item))
+        DashboardContentPageResponseDto response = DashboardContentPageResponseDto.builder()
+                .items(List.of(item))
+                .totalCount(1L)
+                .page(0)
+                .size(10)
                 .build();
 
-        given(dashboardService.getContents(principal.userId())).willReturn(response);
+        given(dashboardService.getContents(principal.userId(), 0, 10)).willReturn(response);
 
-        mockMvc.perform(get("/api/dashboard/contents").principal(authentication))
+        mockMvc.perform(get("/api/dashboard/contents")
+                        .principal(authentication)
+                        .param("page", "0")
+                        .param("size", "10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.contents[0].contentId").value(item.getContentId()))
-                .andExpect(jsonPath("$.contents[0].title").value(item.getTitle()))
-                .andExpect(jsonPath("$.contents[0].clickCount").value(item.getClickCount()));
+                .andExpect(jsonPath("$.items[0].contentId").value(item.getContentId()))
+                .andExpect(jsonPath("$.items[0].title").value(item.getTitle()))
+                .andExpect(jsonPath("$.items[0].clickCount").value(item.getClickCount()))
+                .andExpect(jsonPath("$.totalCount").value(1))
+                .andExpect(jsonPath("$.page").value(0))
+                .andExpect(jsonPath("$.size").value(10));
 
-        then(dashboardService).should().getContents(principal.userId());
+        then(dashboardService).should().getContents(principal.userId(), 0, 10);
     }
 
     private JwtPrincipal testPrincipal(Long userId) {
@@ -251,5 +264,4 @@ public class DashboardControllerTest {
 
 
 }
-
 

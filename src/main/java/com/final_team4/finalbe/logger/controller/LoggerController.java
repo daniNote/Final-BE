@@ -57,7 +57,9 @@ public class LoggerController {
     Map<LogType, Long> counts = loggerService.countLogsByType(principal.userId());
     return Map.of(
         "info", counts.getOrDefault(LogType.INFO, 0L),
-        "error", counts.getOrDefault(LogType.ERROR, 0L)
+        "error", counts.getOrDefault(LogType.ERROR, 0L),
+        "warn", counts.getOrDefault(LogType.WARN, 0L)
+
     );
   }
 

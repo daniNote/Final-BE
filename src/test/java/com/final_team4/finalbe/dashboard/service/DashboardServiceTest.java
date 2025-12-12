@@ -92,18 +92,21 @@ public class DashboardServiceTest {
         linkProductToContent(otherProductId, otherContentId);
         insertClick(otherProductId, "10.0.0.4");
 
-        DashboardContentsResponseDto response = dashboardService.getContents(userId);
+        DashboardContentPageResponseDto response = dashboardService.getContents(userId, 0, 10);
 
-        assertThat(response.getContents()).hasSize(2);
-        assertThat(response.getContents())
+        assertThat(response.getItems()).hasSize(2);
+        assertThat(response.getItems())
                 .extracting(DashboardContentItemDto::getContentId)
                 .containsExactly(secondContentId, firstContentId);
-        assertThat(response.getContents())
+        assertThat(response.getItems())
                 .extracting(DashboardContentItemDto::getTitle)
                 .containsExactly("두번째 콘텐츠", "첫번째 콘텐츠");
-        assertThat(response.getContents())
+        assertThat(response.getItems())
                 .extracting(DashboardContentItemDto::getClickCount)
                 .containsExactly(1L, 2L);
+        assertThat(response.getTotalCount()).isEqualTo(2L);
+        assertThat(response.getPage()).isZero();
+        assertThat(response.getSize()).isEqualTo(10);
     }
 
     @DisplayName("일자별 클릭 수를 반환한다")
@@ -155,7 +158,6 @@ public class DashboardServiceTest {
                 LocalDate.of(2025, 2, 2)))
                 .isInstanceOf(BadRequestException.class);
     }
-
 
 
     private Long insertUser(String name) {

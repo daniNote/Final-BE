@@ -15,6 +15,8 @@ public class DashboardContentItemDto {
     private LocalDateTime updatedAt;
     private String link;
     private long clickCount;
+    private Long categoryId;
+    private String categoryName;
 
     public static DashboardContentItemDto from(DashboardContentSummary summary) {
         return DashboardContentItemDto.builder()
@@ -25,6 +27,8 @@ public class DashboardContentItemDto {
                 .updatedAt(summary.getUpdatedAt())
                 .link(summary.getLink())
                 .clickCount(summary.getClickCount())
+                .categoryId(summary.getCategoryId())
+                .categoryName(summary.getCategoryName())
                 .build();
     }
 

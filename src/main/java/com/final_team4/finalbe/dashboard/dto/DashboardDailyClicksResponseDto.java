@@ -11,4 +11,5 @@ public class DashboardDailyClicksResponseDto {
     private String start;
     private String end;
     private List<DailyClicksDto> dailyClicks;
+    private long contentsCount;
 }

@@ -5,14 +5,6 @@
 
 <mapper namespace="com.final_team4.finalbe.dashboard.mapper.ClicksMapper">
 
-    <!-- 상품별 클릭 수 -->
-    <select id="countClicksByProductId"
-            parameterType="long"
-            resultType="long">
-        SELECT COUNT(*)
-        FROM CLICKS
-        WHERE PRODUCT_ID = #{productId}
-    </select>
 
     <select id="countAllClicksByUserId"
             parameterType="long"
@@ -24,18 +16,32 @@
         WHERE ct.USER_ID = #{userId}
     </select>
 
+
     <select id="findDailyClicks"
             resultType="com.final_team4.finalbe.dashboard.dto.DailyClicksDto">
-        SELECT
-        TO_CHAR(TRUNC(c.CLICKED_AT), 'YYYY-MM-DD') AS clickDate,
-        COUNT(*) AS clicks
+        SELECT TO_CHAR(day_key, 'YYYY-MM-DD') AS clickDate,
+        SUM(clicks) AS clicks,
+        SUM(uploads) AS uploads
+        FROM (
+        SELECT TRUNC(c.CLICKED_AT) AS day_key,
+        COUNT(*) AS clicks,
+        0 AS uploads
         FROM CLICKS c
         JOIN PRODUCT_CONTENT pc ON pc.PRODUCT_ID = c.PRODUCT_ID
         JOIN CONTENT ct ON ct.ID = pc.CONTENT_ID
         WHERE ct.USER_ID = #{userId}
         AND TRUNC(c.CLICKED_AT) BETWEEN #{start} AND #{end}
         GROUP BY TRUNC(c.CLICKED_AT)
-        ORDER BY TRUNC(c.CLICKED_AT)
+        UNION ALL
+        SELECT TRUNC(ct.CREATED_AT) AS day_key,
+        0 AS clicks,
+        COUNT(*) AS uploads
+        FROM CONTENT ct
+        WHERE ct.USER_ID = #{userId}
+        AND TRUNC(ct.CREATED_AT) BETWEEN #{start} AND #{end}
+        GROUP BY TRUNC(ct.CREATED_AT)
+        ) t
+        GROUP BY day_key
+        ORDER BY day_key
     </select>
-
 </mapper>

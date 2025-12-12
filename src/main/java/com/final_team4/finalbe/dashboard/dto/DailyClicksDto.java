@@ -10,4 +10,5 @@ public class DailyClicksDto {
 
     private String clickDate;
     private long clicks;
+    private long uploads;
 }
