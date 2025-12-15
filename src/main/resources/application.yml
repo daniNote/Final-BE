@@ -12,6 +12,9 @@ spring:
   threads:
     virtual:
       enabled: true
+  docker:
+    compose:
+      enabled: false
 
 mybatis:
   # 매퍼 XML 위치

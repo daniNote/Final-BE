@@ -35,6 +35,8 @@ services:
       - "8080:8080"
     volumes:
       - ./:/workspace
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   oracle-data:

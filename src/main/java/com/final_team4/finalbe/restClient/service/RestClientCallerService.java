@@ -19,7 +19,7 @@ public class RestClientCallerService{
   // 키워드 생성해달라고 요청
   public boolean callGetKeywords() {
     ResponseEntity<Void> result = restClient.get()
-            .uri("파이썬 쪽 키워드 생성 엔드포인트")
+            .uri("/api/crawler")
             .retrieve()
             .toBodilessEntity();
 
@@ -39,14 +39,14 @@ public class RestClientCallerService{
 
   // 글 생성해달라고 요청
   public boolean callGeneratePosts(Object requestData) {
-    ResponseEntity<Void> result = callPost(requestData, "파이썬 쪽 글 생성 엔드포인트");
+    ResponseEntity<Void> result = callPost(requestData, "/api/write");
 
     return result.getStatusCode().is2xxSuccessful();
   }
 
   // 글 업로드 해달라고 요청
   public boolean callUploadPosts(Object requestData) {
-    ResponseEntity<Void> result = callPost(requestData, "파이썬 쪽 글 업로드 엔드포인트");
+    ResponseEntity<Void> result = callPost(requestData, "/api/upload");
 
     return result.getStatusCode().is2xxSuccessful();
   }
