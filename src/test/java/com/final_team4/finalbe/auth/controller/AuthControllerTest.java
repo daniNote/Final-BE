@@ -20,7 +20,7 @@ import com.final_team4.finalbe.schedule.mapper.ScheduleSettingMapper;
 import com.final_team4.finalbe.setting.mapper.llm.LlmChannelMapper;
 import com.final_team4.finalbe.setting.mapper.notification.NotificationCredentialMapper;
 import com.final_team4.finalbe.trend.mapper.TrendMapper;
-import com.final_team4.finalbe.uploadChannel.mapper.UploadChannelMapper;
+import com.final_team4.finalbe.setting.mapper.uploadChannel.UploadChannelMapper;
 import com.final_team4.finalbe.user.mapper.UserMapper;
 import java.time.Instant;
 import org.junit.jupiter.api.DisplayName;

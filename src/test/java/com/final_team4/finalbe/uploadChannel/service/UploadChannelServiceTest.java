@@ -1,10 +1,11 @@
 package com.final_team4.finalbe.uploadChannel.service;
 
 import com.final_team4.finalbe._core.exception.ContentNotFoundException;
-import com.final_team4.finalbe.uploadChannel.domain.Channel;
-import com.final_team4.finalbe.uploadChannel.domain.UploadChannel;
-import com.final_team4.finalbe.uploadChannel.dto.UploadChannelItemPayloadDto;
-import com.final_team4.finalbe.uploadChannel.mapper.UploadChannelMapper;
+import com.final_team4.finalbe.setting.domain.uploadChannel.Channel;
+import com.final_team4.finalbe.setting.domain.uploadChannel.UploadChannel;
+import com.final_team4.finalbe.setting.dto.uploadChannel.UploadChannelItemPayloadDto;
+import com.final_team4.finalbe.setting.mapper.uploadChannel.UploadChannelMapper;
+import com.final_team4.finalbe.setting.service.uploadChannel.UploadChannelService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

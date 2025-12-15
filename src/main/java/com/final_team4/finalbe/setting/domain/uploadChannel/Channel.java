@@ -1,4 +1,4 @@
-package com.final_team4.finalbe.uploadChannel.domain;
+package com.final_team4.finalbe.setting.domain.uploadChannel;
 
 import lombok.Getter;
 

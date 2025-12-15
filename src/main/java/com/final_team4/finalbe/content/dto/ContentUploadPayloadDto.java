@@ -1,7 +1,7 @@
 package com.final_team4.finalbe.content.dto;
 
 import com.final_team4.finalbe.content.domain.Content;
-import com.final_team4.finalbe.uploadChannel.domain.UploadChannel;
+import com.final_team4.finalbe.setting.domain.uploadChannel.UploadChannel;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.final_team4.finalbe.uploadChannel.mapper.UploadChannelMapper">
+<mapper namespace="com.final_team4.finalbe.setting.mapper.uploadChannel.UploadChannelMapper">
 
     <select id="findByUserId" parameterType="long" resultType="UploadChannel">
         SELECT id,
@@ -10,12 +10,31 @@
                name,
                api_key,
                status,
+               client_id,
+               client_pw,
                created_at,
                updated_at
         FROM UPLOAD_CHANNEL
         WHERE user_id = #{userId}
-          AND STATUS = '1'
     </select>
+
+    <select id="findActiveByUserId" parameterType="long" resultType="UploadChannel">
+        SELECT id,
+               user_id,
+               name,
+               api_key,
+               status,
+               client_id,
+               client_pw,
+               created_at,
+               updated_at
+        FROM UPLOAD_CHANNEL
+        WHERE
+            user_id = #{userId}
+          and
+            status = '1'
+    </select>
+
 
     <select id="findById" parameterType="long" resultType="UploadChannel">
         SELECT id,
@@ -23,11 +42,54 @@
                name,
                api_key,
                status,
+               client_id,
+               client_pw,
                created_at,
                updated_at
         FROM UPLOAD_CHANNEL
         WHERE id = #{id}
-          AND STATUS = '1'
+          and
+            user_id = #{userId}
     </select>
 
+    <insert id="insert" parameterType="UploadChannel" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO UPLOAD_CHANNEL(
+            user_id,
+            name,
+            status,
+            api_key,
+            client_id,
+            client_pw
+        ) VALUES (
+                     #{userId},
+                     #{name},
+                     #{status},
+                     #{apiKey},
+                     #{clientId},
+                     #{clientPw}
+                 )
+    </insert>
+
+    <update id="update" parameterType="UploadChannel">
+        UPDATE UPLOAD_CHANNEL SET
+            api_key = #{apiKey},
+            client_id = #{clientId},
+            client_pw = #{clientPw},
+            status = #{status},
+            UPDATED_AT = sysdate
+        where
+            id = #{id}
+          and
+            user_id = #{userId}
+    </update>
+
+    <update id="updateStatusById">
+        UPDATE UPLOAD_CHANNEL SET
+            STATUS = #{status},
+            UPDATED_AT = sysdate
+        where
+            ID = #{id}
+          and
+            USER_ID = #{userId}
+    </update>
 </mapper>

@@ -19,7 +19,7 @@ import com.final_team4.finalbe.trend.domain.TrendSnsType;
 import com.final_team4.finalbe.trend.dto.*;
 import com.final_team4.finalbe.trend.mapper.TrendMapper;
 import com.final_team4.finalbe.trend.service.TrendService;
-import com.final_team4.finalbe.uploadChannel.mapper.UploadChannelMapper;
+import com.final_team4.finalbe.setting.mapper.uploadChannel.UploadChannelMapper;
 import com.final_team4.finalbe.user.mapper.UserMapper;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

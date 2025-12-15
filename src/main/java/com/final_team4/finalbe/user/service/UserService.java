@@ -9,10 +9,13 @@ import com.final_team4.finalbe.schedule.dto.schedule.ScheduleCreateRequestDto;
 import com.final_team4.finalbe.schedule.dto.scheduleSetting.ScheduleSettingCreateRequestDto;
 import com.final_team4.finalbe.schedule.service.ScheduleService;
 import com.final_team4.finalbe.schedule.service.ScheduleSettingService;
+import com.final_team4.finalbe.setting.domain.uploadChannel.Channel;
 import com.final_team4.finalbe.setting.dto.llm.LlmChannelCreateRequestDto;
 import com.final_team4.finalbe.setting.dto.notification.NotificationCredentialCreateRequestDto;
+import com.final_team4.finalbe.setting.dto.uploadChannel.UploadChannelCreateRequestDto;
 import com.final_team4.finalbe.setting.service.llm.LlmChannelService;
 import com.final_team4.finalbe.setting.service.notification.NotificationCredentialService;
+import com.final_team4.finalbe.setting.service.uploadChannel.UploadChannelService;
 import com.final_team4.finalbe.user.domain.User;
 import com.final_team4.finalbe.user.dto.PasswordUpdateRequest;
 import com.final_team4.finalbe.user.dto.UserRegisterRequestDto;
@@ -48,6 +51,7 @@ public class UserService {
     private final LlmChannelService llmChannelService;
     private final ScheduleService scheduleService;
     private final NotificationCredentialService notificationCredentialService;
+    private final UploadChannelService uploadChannelService;
 
     @Transactional
     public UserSummaryResponse register(@Valid UserRegisterRequestDto request) {
@@ -98,6 +102,16 @@ public class UserService {
         notificationCredentialService.insert(user.getId(), notificationCredentialCreateRequestDto);
         //알림 설정 기본값 채워주기
 
+
+        var uploadChannelDto = UploadChannelCreateRequestDto.builder()
+                .name(Channel.NAVER)
+                .apiKey("")
+                .status(true)
+                .clientId("")
+                .clientPw("")
+                .build();
+        uploadChannelService.createChannel(user.getId(), uploadChannelDto);
+        // 업로드 채널 기본값 채워주기
         return userInfoMapper.toUserSummary(user);
     }
 

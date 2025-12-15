@@ -21,7 +21,7 @@ import com.final_team4.finalbe.schedule.mapper.ScheduleSettingMapper;
 import com.final_team4.finalbe.setting.mapper.llm.LlmChannelMapper;
 import com.final_team4.finalbe.setting.mapper.notification.NotificationCredentialMapper;
 import com.final_team4.finalbe.trend.mapper.TrendMapper;
-import com.final_team4.finalbe.uploadChannel.mapper.UploadChannelMapper;
+import com.final_team4.finalbe.setting.mapper.uploadChannel.UploadChannelMapper;
 import com.final_team4.finalbe.user.mapper.UserInfoMapper;
 import com.final_team4.finalbe.user.mapper.UserMapper;
 import com.final_team4.finalbe.user.service.UserService;

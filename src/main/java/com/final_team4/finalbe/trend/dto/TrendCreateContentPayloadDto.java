@@ -1,7 +1,7 @@
 package com.final_team4.finalbe.trend.dto;
 
 import com.final_team4.finalbe.setting.dto.llm.LlmChannelDetailResponseDto;
-import com.final_team4.finalbe.uploadChannel.dto.UploadChannelItemPayloadDto;
+import com.final_team4.finalbe.setting.dto.uploadChannel.UploadChannelItemPayloadDto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
